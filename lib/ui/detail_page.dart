@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gadgetku/common/textstyle.dart';
 
@@ -13,9 +14,9 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CupertinoPageScaffold(
       backgroundColor: Colors.grey.shade200,
-      body: SafeArea(
+      child: SafeArea(
         child: Stack(
           children: [
             Container(
@@ -166,35 +167,6 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.all(15),
-        child: Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Rp 15.000.000',
-                style: poppins(23, FontWeight.w500, Colors.black),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Add To Cart',
-                  style: poppins(18, FontWeight.w500, Colors.white),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

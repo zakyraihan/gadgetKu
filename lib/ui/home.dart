@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gadgetku/ui/favorite_page/favorite_page.dart';
-import 'package:gadgetku/ui/home%20page/home_page.dart';
-import 'package:gadgetku/ui/search%20page/search_page.dart';
-import 'package:gadgetku/ui/settings%20page/settings_page.dart';
+import 'package:gadgetku/ui/favorite_page.dart';
+import 'package:gadgetku/ui/home_page.dart';
+import 'package:gadgetku/ui/search_page.dart';
+import 'package:gadgetku/ui/settings_page.dart';
+import 'package:gadgetku/widget/platform_widget.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Home extends StatefulWidget {
@@ -13,9 +17,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int menu = 0;
+  int _bottomNavIndex = 0;
 
-  List page = [
+  final List<BottomNavigationBarItem> _bottomNavItems = [
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.home : Icons.home),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.search : Icons.search),
+      label: 'Search',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.heart : Icons.favorite),
+      label: 'Favorite',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
+      label: 'Settings',
+    ),
+  ];
+
+  final List<Widget> _listWidget = [
     const HomePage(),
     const SearchPage(),
     const FavoritePage(),
@@ -24,55 +47,47 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIos,
+    );
+  }
+
+  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      body: page[menu],
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(9.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.all(
-              Radius.circular(100),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: GNav(
-            color: Colors.white,
-            tabBackgroundColor: Colors.white,
-            activeColor: Colors.blue,
-            padding: const EdgeInsets.all(10),
-            gap: 8,
-            onTabChange: (value) {
-              setState(() {
-                menu = value;
-              });
-            },
-            tabs: const [
-              GButton(icon: Icons.home, text: 'Home'),
-              GButton(icon: Icons.search, text: 'Search'),
-              GButton(icon: Icons.favorite, text: 'favorite'),
-              GButton(icon: Icons.settings, text: 'Settings'),
-            ],
-          ),
+      body: _listWidget[_bottomNavIndex],
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: GNav(
+          tabBackgroundColor: Colors.black,
+          activeColor: Colors.white,
+          padding: const EdgeInsets.all(10),
+          gap: 8,
+          onTabChange: (value) {
+            setState(() {
+              _bottomNavIndex = value;
+            });
+          },
+          tabs: const [
+            GButton(icon: Icons.home, text: "Home"),
+            GButton(icon: Icons.near_me, text: "Booking"),
+            GButton(icon: Icons.favorite, text: "Favorit"),
+            GButton(icon: Icons.person, text: "Profile"),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildIos(BuildContext context) {
+    return CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      home: CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(items: _bottomNavItems),
+        tabBuilder: (context, index) {
+          return _listWidget[index];
+        },
+      ),
+    );
+  }
 }
-
-//  BottomNavigationBar(
-//         selectedItemColor: Colors.blue,
-//         onTap: (value) {
-//           setState(() {
-//             menu = value;
-//           });
-//         },
-//         items: const [
-//           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-//           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.settings), label: 'settings'),
-//         ],
-//       ),
-

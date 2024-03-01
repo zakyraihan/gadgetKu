@@ -39,6 +39,7 @@ class _ProdukWidgetState extends State<ProdukWidget> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(widget.gambarProduk),
+                  fit: BoxFit.fitHeight,
                 ),
                 color: Colors.grey.shade200,
                 borderRadius: const BorderRadius.only(
