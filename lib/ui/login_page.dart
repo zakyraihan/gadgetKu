@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:gadgetku/common/textstyle.dart';
 import 'package:gadgetku/widget/textfield_cupertino.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
@@ -35,19 +35,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      "Let's Create An account",
+                      'Welcome Back',
                       style: poppins(22, FontWeight.w500, Colors.black),
                     ),
                     Text(
-                      'Create a new account for more explore',
+                      'Put your password to explore again',
                       style: poppins(14, FontWeight.w500, Colors.grey.shade500),
                     ),
                     const SizedBox(height: 30),
-                    CupertinoTextFieldWidget(
-                      label: 'Your name',
-                      placeHolder: 'Enter your name ',
-                    ),
-                    const SizedBox(height: 25),
                     CupertinoTextFieldWidget(
                       label: 'Email',
                       placeHolder: 'Enter your email',
@@ -70,10 +65,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: [
                           TextButton(
                             onPressed: () =>
-                                Navigator.pushNamed(context, '/login-page'),
+                                Navigator.pushNamed(context, '/register-page'),
                             child: Text(
-                              'Sign In',
-                              style: poppins(13, FontWeight.w500, Colors.blue),
+                              'Sign Up For Free',
+                              style:
+                                  poppins(13, FontWeight.normal, Colors.blue),
                             ),
                           ),
                           TextButton(
@@ -93,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(50),
                         child: Text(
-                          'Sign Up',
+                          'Sign In',
                           style: poppins(16, FontWeight.w500, Colors.white),
                         ),
                         onPressed: () {},
@@ -120,11 +116,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         onPressed: () {},
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

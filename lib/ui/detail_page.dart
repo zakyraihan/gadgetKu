@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gadgetku/common/textstyle.dart';
+import 'package:gadgetku/widget/platform_widget.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -14,6 +15,17 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIos,
+    );
+  }
+
+  Widget _buildAndroid(BuildContext context) {
+    return const Scaffold();
+  }
+
+  Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: Colors.grey.shade200,
       child: SafeArea(
