@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:gadgetku/common/textstyle.dart';
 
 class ProdukWidget extends StatefulWidget {
-  ProdukWidget(
-      {super.key,
-      required this.namaProduk,
-      required this.gambarProduk,
-      required this.rating,
-      required this.hargaProduk});
+  ProdukWidget({
+    super.key,
+    required this.namaProduk,
+    required this.gambarProduk,
+    required this.rating,
+    required this.hargaProduk,
+  });
 
   String namaProduk;
   String gambarProduk;
@@ -32,8 +33,8 @@ class _ProdukWidgetState extends State<ProdukWidget> {
             width: 170,
             height: 170,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(widget.gambarProduk),
+              image: const DecorationImage(
+                image: AssetImage('assets/home/produk-test.png'),
                 fit: BoxFit.fitHeight,
               ),
               color: Colors.grey.shade200,

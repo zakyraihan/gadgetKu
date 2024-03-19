@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gadgetku/ui/favorite_page.dart';
-import 'package:gadgetku/ui/home_page.dart';
+import 'package:gadgetku/ui/homepage/home_page.dart';
 import 'package:gadgetku/ui/search_page.dart';
 import 'package:gadgetku/ui/settings_page.dart';
 import 'package:gadgetku/widget/platform_widget.dart';
@@ -80,14 +80,11 @@ class _HomeState extends State<Home> {
   }
 
   Widget _buildIos(BuildContext context) {
-    return CupertinoApp(
-      debugShowCheckedModeBanner: false,
-      home: CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(items: _bottomNavItems),
-        tabBuilder: (context, index) {
-          return _listWidget[index];
-        },
-      ),
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(items: _bottomNavItems),
+      tabBuilder: (context, index) {
+        return _listWidget[index];
+      },
     );
   }
 }

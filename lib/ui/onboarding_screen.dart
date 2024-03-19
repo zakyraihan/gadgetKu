@@ -212,7 +212,8 @@ class OnBoardContent extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.blue,
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () =>
+                              Navigator.pushReplacementNamed(context, '/'),
                           icon: const Icon(CupertinoIcons.arrow_right,
                               color: Colors.white),
                         ),

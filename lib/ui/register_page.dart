@@ -11,6 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     var lebar = MediaQuery.of(context).size.width;
@@ -55,11 +56,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 25),
                     CupertinoTextFieldWidget(
                       label: 'Password',
-                      isObsecure: true,
+                      isObsecure: _isObscure,
                       placeHolder: 'Password',
                       suffix: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(CupertinoIcons.eye),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
+                        icon: _isObscure
+                            ? const Icon(CupertinoIcons.eye)
+                            : const Icon(CupertinoIcons.eye_slash),
                       ),
                     ),
                     Container(
