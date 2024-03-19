@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:gadgetku/common/textstyle.dart';
+import 'package:gadgetku/data/common/textstyle.dart';
 
 class JudulWidget extends StatelessWidget {
   JudulWidget({super.key, required this.title, required this.onPressed});

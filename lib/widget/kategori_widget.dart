@@ -1,16 +1,17 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:gadgetku/common/textstyle.dart';
+import 'package:gadgetku/data/common/textstyle.dart';
+import 'package:gadgetku/data/model/model.dart';
 
 class KategoriWidget extends StatefulWidget {
   KategoriWidget({
     super.key,
-    required this.text,
+    required this.kategori,
     //  this.image,
   });
 
-  String text;
+  final KategoriList kategori;
 
   @override
   State<KategoriWidget> createState() => _KategoriWidgetState();
@@ -48,7 +49,7 @@ class _KategoriWidgetState extends State<KategoriWidget> {
                     // Image.asset(image ?? ''),
                     // SizedBox(width: 3),
                     Text(
-                      'Smartphone',
+                      widget.kategori.namaKategori,
                       style: poppins(15, FontWeight.normal),
                     ),
                   ],

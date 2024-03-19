@@ -1,21 +1,16 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:gadgetku/common/textstyle.dart';
+import 'package:gadgetku/data/common/textstyle.dart';
+import 'package:gadgetku/data/model/model.dart';
 
 class ProdukWidget extends StatefulWidget {
-  ProdukWidget({
+  const ProdukWidget({
     super.key,
-    required this.namaProduk,
-    required this.gambarProduk,
-    required this.rating,
-    required this.hargaProduk,
+    required this.produk,
   });
 
-  String namaProduk;
-  String gambarProduk;
-  String rating;
-  String hargaProduk;
+  final ProdukList produk;
 
   @override
   State<ProdukWidget> createState() => _ProdukWidgetState();
@@ -65,7 +60,7 @@ class _ProdukWidgetState extends State<ProdukWidget> {
               SizedBox(
                 width: 95, // Adjusted width for the Text widget
                 child: Text(
-                  widget.namaProduk,
+                  widget.produk.namaProduk,
                   overflow: TextOverflow.ellipsis,
                   style: poppins(
                     13,
@@ -84,7 +79,7 @@ class _ProdukWidgetState extends State<ProdukWidget> {
                     color: Colors.yellow.shade600,
                   ),
                   Text(
-                    widget.rating,
+                    widget.produk.stok.toString(),
                     style: roboto(
                       15,
                       FontWeight.w500,
@@ -97,7 +92,7 @@ class _ProdukWidgetState extends State<ProdukWidget> {
           ),
           const SizedBox(height: 5),
           Text(
-            'Rp ${widget.hargaProduk}',
+            'Rp ${widget.produk.harga}',
             style: poppins(15, FontWeight.w600, Colors.grey.shade900),
           ),
         ],

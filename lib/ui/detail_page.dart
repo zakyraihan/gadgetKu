@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gadgetku/common/textstyle.dart';
+import 'package:gadgetku/data/common/textstyle.dart';
 import 'package:gadgetku/widget/platform_widget.dart';
 
 class DetailPage extends StatefulWidget {

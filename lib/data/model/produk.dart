@@ -2,7 +2,7 @@
 //
 //     final produk = produkFromJson(jsonString);
 
-import 'dart:convert';
+part of 'model.dart';
 
 Produk produkFromJson(String str) => Produk.fromJson(json.decode(str));
 
@@ -24,7 +24,8 @@ class Produk {
   factory Produk.fromJson(Map<String, dynamic> json) => Produk(
         status: json["status"],
         message: json["message"],
-        data: List<ProdukList>.from(json["data"].map((x) => ProdukList.fromJson(x))),
+        data: List<ProdukList>.from(
+            json["data"].map((x) => ProdukList.fromJson(x))),
         pagination: Pagination.fromJson(json["pagination"]),
       );
 
@@ -44,7 +45,7 @@ class ProdukList {
   int stok;
   AtedBy createdBy;
   AtedBy? updatedBy;
-  Kategori kategori;
+  // Kategori? kategori;
 
   ProdukList({
     required this.id,
@@ -54,7 +55,7 @@ class ProdukList {
     required this.stok,
     required this.createdBy,
     required this.updatedBy,
-    required this.kategori,
+    // required this.kategori,
   });
 
   factory ProdukList.fromJson(Map<String, dynamic> json) => ProdukList(
@@ -67,7 +68,7 @@ class ProdukList {
         updatedBy: json["updated_by"] == null
             ? null
             : AtedBy.fromJson(json["updated_by"]),
-        kategori: Kategori.fromJson(json["kategori"]),
+        // kategori: Kategori.fromJson(json["kategori"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -78,7 +79,7 @@ class ProdukList {
         "stok": stok,
         "created_by": createdBy.toJson(),
         "updated_by": updatedBy?.toJson(),
-        "kategori": kategori.toJson(),
+        // "kategori": kategori!.toJson(),
       };
 }
 
@@ -99,53 +100,5 @@ class AtedBy {
   Map<String, dynamic> toJson() => {
         "id": id,
         "nama": nama,
-      };
-}
-
-class Kategori {
-  int id;
-  String namaKategori;
-
-  Kategori({
-    required this.id,
-    required this.namaKategori,
-  });
-
-  factory Kategori.fromJson(Map<String, dynamic> json) => Kategori(
-        id: json["id"],
-        namaKategori: json["nama_kategori"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "nama_kategori": namaKategori,
-      };
-}
-
-class Pagination {
-  int total;
-  int page;
-  int pageSize;
-  int totalPage;
-
-  Pagination({
-    required this.total,
-    required this.page,
-    required this.pageSize,
-    required this.totalPage,
-  });
-
-  factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
-        total: json["total"],
-        page: json["page"],
-        pageSize: json["pageSize"],
-        totalPage: json["total_page"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "total": total,
-        "page": page,
-        "pageSize": pageSize,
-        "total_page": totalPage,
       };
 }

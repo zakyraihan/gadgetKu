@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gadgetku/common/textstyle.dart';
+import 'package:gadgetku/data/common/textstyle.dart';
 import 'package:gadgetku/widget/textfield_cupertino.dart';
 
 class LoginPage extends StatefulWidget {

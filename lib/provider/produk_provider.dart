@@ -4,19 +4,19 @@ import 'package:gadgetku/data/common/resultstate.dart';
 import 'package:gadgetku/data/model/model.dart';
 
 
-class KategoriProvider extends ChangeNotifier {
+class ProdukProvider extends ChangeNotifier {
   final TokoService apiService;
   String query = '';
 
-  KategoriProvider({required this.apiService}) {
+  ProdukProvider({required this.apiService}) {
     fetchAllData();
   }
 
-  late Kategori _kategoriResult;
+  late Produk _produkResult;
   late ResultState _state;
   String _message = '';
 
-  Kategori get result => _kategoriResult;
+  Produk get result => _produkResult;
   ResultState get state => _state;
   String get message => _message;
 
@@ -24,15 +24,15 @@ class KategoriProvider extends ChangeNotifier {
     try {
       _state = ResultState.loading;
       notifyListeners();
-      final kategori = await apiService.getKategori();
-      if (kategori.data.isEmpty) {
+      final produk = await apiService.getProduk();
+      if (produk.data.isEmpty) {
         _state = ResultState.noData;
         notifyListeners();
         return _message = 'empty data';
       } else {
         _state = ResultState.hasData;
         notifyListeners();
-        return _kategoriResult = kategori;
+        return _produkResult = produk;
       }
     } catch (e) {
       print(e);

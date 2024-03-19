@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gadgetku/common/textstyle.dart';
-import 'package:gadgetku/model/produk.dart';
-import 'package:gadgetku/ui/homepage/home_controller.dart';
+import 'package:gadgetku/data/common/resultstate.dart';
+import 'package:gadgetku/data/common/textstyle.dart';
+import 'package:gadgetku/provider/kategori_provider.dart';
+import 'package:gadgetku/provider/produk_provider.dart';
 import 'package:gadgetku/widget/judul_widget.dart';
 import 'package:gadgetku/widget/kategori_widget.dart';
 import 'package:gadgetku/widget/platform_widget.dart';
 import 'package:gadgetku/widget/produk_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -57,25 +59,93 @@ class _HomePageState extends State<HomePage> {
                       height: 16), // Adjust the space according to your needs
 
                   JudulWidget(title: 'Categories', onPressed: () => ()),
-                  KategoriWidget(text: 'text'),
+                  Container(
+                    child: Consumer<KategoriProvider>(
+                      builder: (context, state, _) {
+                        if (state.state == ResultState.loading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          if (state.state == ResultState.hasData) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Wrap(
+                                children: List.generate(
+                                    state.result.data.length, (index) {
+                                  var kategori = state.result.data[index];
+                                  return KategoriWidget(kategori: kategori);
+                                }),
+                              ),
+                            );
+                          } else if (state.state == ResultState.noData) {
+                            return Center(
+                              child: Text(state.message),
+                            );
+                          } else if (state.state == ResultState.error) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.error),
+                                  Text(state.message),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const Scaffold();
+                          }
+                        }
+                      },
+                    ),
+                  ),
 
                   const SizedBox(height: 15),
 
                   JudulWidget(title: 'Products', onPressed: () => ()),
-                  // Wrap(
-                  //   spacing: 15,
-                  //   runSpacing: 15,
-                  //   children: List.generate(
-                  //     10,
-                  //     (index) => GestureDetector(
-                  //       onTap: () =>
-                  //           Navigator.pushNamed(context, '/detail-page'),
-                  //       child: ProdukWidget(
-                  //         produk: dataProduk[index],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Container(
+                    child: Consumer<ProdukProvider>(
+                      builder: (context, state, _) {
+                        if (state.state == ResultState.loading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          if (state.state == ResultState.hasData) {
+                            return SingleChildScrollView(
+                              child: Wrap(
+                                spacing: 15,
+                                runSpacing: 15,
+                                children: List.generate(
+                                    state.result.data.length, (index) {
+                                  var produk = state.result.data[index];
+                                  return ProdukWidget(
+                                    produk: produk,
+                                  );
+                                }),
+                              ),
+                            );
+                          } else if (state.state == ResultState.noData) {
+                            return Center(
+                              child: Text(state.message),
+                            );
+                          } else if (state.state == ResultState.error) {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(Icons.error),
+                                  Text(state.message),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const Scaffold();
+                          }
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -118,18 +188,18 @@ class _HomePageState extends State<HomePage> {
 
                 JudulWidget(title: 'Categories', onPressed: () {}),
 
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Wrap(
-                    spacing: 10,
-                    children: List.generate(
-                      5,
-                      (index) => KategoriWidget(
-                        text: 'Smartphone',
-                      ),
-                    ),
-                  ),
-                ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Wrap(
+                //     spacing: 10,
+                //     children: List.generate(
+                //       5,
+                //       (index) => KategoriWidget(
+                //         text: 'Smartphone',
+                //       ),
+                //     ),
+                //   ),
+                // ),
 
                 const SizedBox(height: 15),
 
