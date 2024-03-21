@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gadgetku/data/api/toko_service.dart';
 import 'package:gadgetku/provider/kategori_provider.dart';
 import 'package:gadgetku/provider/produk_provider.dart';
+import 'package:gadgetku/ui/all_produk_page.dart';
 import 'package:gadgetku/ui/cart_page.dart';
 import 'package:gadgetku/ui/detail_page.dart';
 import 'package:gadgetku/ui/forgot_password_page.dart';
@@ -68,6 +69,7 @@ class _MyAppState extends State<MyApp> {
                           const ForgotPasswordPage(),
                       '/': (context) => const Home(),
                       '/detail-page': (context) => const DetailPage(),
+                      '/allproduk': (context) => const AllProdukPage(),
                       '/not-found': (context) => const NotFoundPage(),
                     },
                   )
@@ -86,6 +88,7 @@ class _MyAppState extends State<MyApp> {
                       '/': (context) => const Home(),
                       '/detail-page': (context) => const DetailPage(),
                       '/cart-page': (context) => const CartPage(),
+                      '/allproduk': (context) => const AllProdukPage(),
                       '/not-found': (context) => const NotFoundPage(),
                     },
                   );

@@ -10,23 +10,20 @@ import 'package:gadgetku/widget/platform_widget.dart';
 import 'package:gadgetku/widget/produk_widget.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class AllProdukPage extends StatefulWidget {
+  const AllProdukPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AllProdukPage> createState() => _AllProdukPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  List banner = [
-    'assets/home/Group 1.png',
-    'assets/home/Rectangle 3.png',
-    'assets/home/Group 3.png',
-  ];
-
+class _AllProdukPageState extends State<AllProdukPage> {
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(androidBuilder: _buildAndroid, iosBuilder: _buildIos);
+    return PlatformWidget(
+      androidBuilder: _buildAndroid,
+      iosBuilder: _buildIos,
+    );
   }
 
   Widget _buildIos(BuildContext context) {
@@ -41,7 +38,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {},
               icon: const Icon(CupertinoIcons.bell),
             ),
-            largeTitle: const Text('Discover'),
+            largeTitle: const Text('All Products'),
             trailing: IconButton(
               onPressed: () => Navigator.pushNamed(context, '/cart-page'),
               icon: const Icon(CupertinoIcons.cart),
@@ -94,7 +91,6 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                   const SizedBox(height: 15),
-                  JudulWidget(title: 'Products', onPressed: () => Navigator.pushNamed(context, '/allproduk')),
                   Consumer<ProdukProvider>(
                     builder: (context, state, _) {
                       if (state.state == ResultState.loading) {
