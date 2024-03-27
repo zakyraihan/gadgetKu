@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gadgetku/api/toko_service.dart';
 import 'package:gadgetku/common/textstyle.dart';
-import 'package:gadgetku/model/produk.dart';
-import 'package:gadgetku/ui/homepage/home_controller.dart';
+import 'package:gadgetku/model/model.dart';
 import 'package:gadgetku/widget/judul_widget.dart';
 import 'package:gadgetku/widget/kategori_widget.dart';
 import 'package:gadgetku/widget/platform_widget.dart';
 import 'package:gadgetku/widget/produk_widget.dart';
+import 'package:gadgetku/widget/shimmer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String categoryId = '';
   List banner = [
     'assets/home/Group 1.png',
     'assets/home/Rectangle 3.png',
@@ -29,8 +31,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      // A ScrollView that creates custom scroll effects using slivers.
-      // Image.asset('assets/img/logo.png', height: 45)
       child: CustomScrollView(
         slivers: [
           CupertinoSliverNavigationBar(
@@ -51,31 +51,73 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Column(
                 children: [
-                  // _buildCarousel(),
-
-                  const SizedBox(
-                      height: 16), // Adjust the space according to your needs
-
+                  const SizedBox(height: 16),
                   JudulWidget(title: 'Categories', onPressed: () => ()),
-                  KategoriWidget(text: 'text'),
+                  FutureBuilder(
+                    future: ApiService().getKategori(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        List<Kategori> data = snapshot.data;
 
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Wrap(
+                            spacing: 10,
+                            children: List.generate(
+                              data.length,
+                              (index) => KategoriWidget(
+                                image: data[index].image,
+                                title: data[index].name,
+                                onTap: () {
+                                  print('${data[index].id}');
+                                  setState(() {
+                                    categoryId = data[index].id.toString();
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return buildShimmer(context);
+                      }
+                    },
+                  ),
                   const SizedBox(height: 15),
+                  JudulWidget(
+                    title: 'Products',
+                    onPressed: () => Navigator.pushNamed(context, '/allproduk'),
+                  ),
+                  FutureBuilder(
+                    future: ApiService().getProduk(categoryId),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        List<Produk> data = snapshot.data;
 
-                  JudulWidget(title: 'Products', onPressed: () => ()),
-                  // Wrap(
-                  //   spacing: 15,
-                  //   runSpacing: 15,
-                  //   children: List.generate(
-                  //     10,
-                  //     (index) => GestureDetector(
-                  //       onTap: () =>
-                  //           Navigator.pushNamed(context, '/detail-page'),
-                  //       child: ProdukWidget(
-                  //         produk: dataProduk[index],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                        return Wrap(
+                          spacing: 10,
+                          children: List.generate(
+                            data.length,
+                            (index) => GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                '/detail-page',
+                                arguments: data[index],
+                              ),
+                              child: ProdukWidget(
+                                namaProduk: data[index].title,
+                                gambarProduk: data[index].images,
+                                rating: data[index].id,
+                                hargaProduk: data[index].price.toDouble(),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -118,18 +160,16 @@ class _HomePageState extends State<HomePage> {
 
                 JudulWidget(title: 'Categories', onPressed: () {}),
 
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Wrap(
-                    spacing: 10,
-                    children: List.generate(
-                      5,
-                      (index) => KategoriWidget(
-                        text: 'Smartphone',
-                      ),
-                    ),
-                  ),
-                ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Wrap(
+                //     spacing: 10,
+                //     children: List.generate(
+                //       5,
+                //       (index) => const KategoriWidget(),
+                //     ),
+                //   ),
+                // ),
 
                 const SizedBox(height: 15),
 
@@ -156,27 +196,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  // CarouselSlider _buildCarousel() {
-  //   return CarouselSlider(
-  //     items: banner.map((e) => Image.asset(e)).toList(),
-  //     options: CarouselOptions(
-  //       autoPlay: true,
-  //       disableCenter: true,
-  //       onPageChanged: (index, reason) {
-  //         setState(() {
-  //           _currentIndex = index;
-  //         });
-  //       },
-  //       // Properti untuk dots (indikator)
-  //       height: 200.0,
-  //       aspectRatio: 16 / 9,
-  //       viewportFraction: 1.0,
-  //       enableInfiniteScroll: true,
-  //       autoPlayInterval: const Duration(seconds: 3),
-  //       autoPlayAnimationDuration: const Duration(milliseconds: 800),
-  //       autoPlayCurve: Curves.fastOutSlowIn,
-  //     ),
-  //   );
-  // }
 }

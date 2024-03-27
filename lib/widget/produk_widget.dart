@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:gadgetku/common/textstyle.dart';
 
@@ -13,9 +11,9 @@ class ProdukWidget extends StatefulWidget {
   });
 
   String namaProduk;
-  String gambarProduk;
-  String rating;
-  String hargaProduk;
+  List<String> gambarProduk;
+  int rating;
+  double hargaProduk;
 
   @override
   State<ProdukWidget> createState() => _ProdukWidgetState();
@@ -29,33 +27,39 @@ class _ProdukWidgetState extends State<ProdukWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 170,
             height: 170,
-            decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: AssetImage('assets/home/produk-test.png'),
-                fit: BoxFit.fitHeight,
-              ),
-              color: Colors.grey.shade200,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-            ),
-            child: Container(
-              padding: const EdgeInsets.only(right: 5, top: 5),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.check_circle_outline_rounded,
-                    color: Colors.blue,
-                    size: 20,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.gambarProduk.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 170,
+                  height: 170,
+                  margin: const EdgeInsets.only(right: 5),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
                   ),
-                ],
-              ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
+                    child: Image.network(
+                      widget.gambarProduk[index],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.error);
+                      },
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(height: 5),
@@ -63,7 +67,7 @@ class _ProdukWidgetState extends State<ProdukWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 95, // Adjusted width for the Text widget
+                width: 95,
                 child: Text(
                   widget.namaProduk,
                   overflow: TextOverflow.ellipsis,
@@ -84,7 +88,7 @@ class _ProdukWidgetState extends State<ProdukWidget> {
                     color: Colors.yellow.shade600,
                   ),
                   Text(
-                    widget.rating,
+                    widget.rating.toString(),
                     style: roboto(
                       15,
                       FontWeight.w500,

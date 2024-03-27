@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gadgetku/common/textstyle.dart';
+import 'package:gadgetku/model/model.dart';
 import 'package:gadgetku/widget/platform_widget.dart';
 
 class DetailPage extends StatefulWidget {
@@ -65,6 +66,7 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Widget _buildIos(BuildContext context) {
+    final data = ModalRoute.of(context)!.settings.arguments as Produk;
     return CupertinoPageScaffold(
       backgroundColor: Colors.grey.shade200,
       child: Stack(
@@ -83,7 +85,8 @@ class _DetailPageState extends State<DetailPage> {
                 },
                 itemCount: image.length,
                 controller: _pageController,
-                itemBuilder: (context, index) => Image.asset(image[index])),
+                itemBuilder: (context, index) =>
+                    Image.network(data.images[index], fit: BoxFit.cover)),
           ),
           SafeArea(
             child: Padding(
@@ -126,36 +129,9 @@ class _DetailPageState extends State<DetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Iphone 15 pro max',
-                            style: poppins(20, FontWeight.w500, Colors.black),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 13, vertical: 7),
-                            decoration: const BoxDecoration(
-                              color: Colors.red,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.discount,
-                                  color: Colors.white,
-                                ),
-                                Text(
-                                  'On Sale',
-                                  style: poppins(
-                                      16, FontWeight.normal, Colors.white),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                      Text(
+                        data.title,
+                        style: poppins(20, FontWeight.w500, Colors.black),
                       ),
                       const SizedBox(height: 10),
                       Row(
@@ -173,7 +149,7 @@ class _DetailPageState extends State<DetailPage> {
                                   Icon(Icons.star,
                                       color: Colors.yellow.shade600),
                                   const SizedBox(width: 5),
-                                  const Text('4.5')
+                                  Text(data.id.toString())
                                 ],
                               ),
                             ),
@@ -190,7 +166,7 @@ class _DetailPageState extends State<DetailPage> {
                           });
                         },
                         child: Text(
-                          'Layar iPhone 15 Pro Max memiliki sudut melengkung yang mengikuti desain lekukan yang indah, dan semua sudut ini berada di dalam bidang persegi standar. Jika diukur sebagai bentuk persegi standar, layarnya berukuran 6,69 inci secara diagonal (area bidang layar berukuran lebih kecil).',
+                          data.description,
                           maxLines: isExpanded ? 5 : 100,
                           overflow: TextOverflow.ellipsis,
                           style: poppins(15, FontWeight.w400, Colors.black),
@@ -224,7 +200,7 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    '1TB',
+                                    'null',
                                     style: TextStyle(
                                         color: _selectedIndex == index
                                             ? Colors.white

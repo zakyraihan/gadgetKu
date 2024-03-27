@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gadgetku/ui/all_product.dart';
 import 'package:gadgetku/ui/cart_page.dart';
 import 'package:gadgetku/ui/detail_page.dart';
 import 'package:gadgetku/ui/forgot_password_page.dart';
@@ -24,15 +25,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String? token =
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwibmFtYSI6ImhpbG1pIHNhamFsYWgiLCJlbWFpbCI6ImhpbG1pQGdtYWlsLmNvbSIsImlhdCI6MTcxMDczMjUwMywiZXhwIjoxNzEwODE4OTAzfQ.Y_ydZil66tFNZArhw_Pu5IxaLj17n6BJAcxXu-oMoAE';
-
-  @override
-  void initState() {
-    token;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -42,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           return Platform.isAndroid
               ? MaterialApp(
                   theme: ThemeData.light(),
-                  title: 'GadgetKu',
+                  title: 'belanjaAja',
                   debugShowCheckedModeBanner: false,
                   initialRoute: '/',
                   routes: {
@@ -58,7 +50,7 @@ class _MyAppState extends State<MyApp> {
                   },
                 )
               : CupertinoApp(
-                  title: 'GadgetKu',
+                  title: 'belanjaAja',
                   debugShowCheckedModeBanner: false,
                   initialRoute: '/',
                   routes: {
@@ -71,6 +63,8 @@ class _MyAppState extends State<MyApp> {
                     '/': (context) => const Home(),
                     '/detail-page': (context) => const DetailPage(),
                     '/cart-page': (context) => const CartPage(),
+                    // '/search-page': (context) => const SearchPage(),
+                    '/allproduk': (context) => const AllProdukPage(),
                     '/not-found': (context) => const NotFoundPage(),
                   },
                 );
