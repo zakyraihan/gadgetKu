@@ -16,8 +16,8 @@ class SplashScreen extends StatelessWidget {
               child: Image.asset('assets/img/logo.png'),
             ),
             const Center(
-              child: Text('powered by gadgetKu'),
-            )
+                // child: Text('powered by gadgetKu'),
+                )
           ],
         ),
       ),

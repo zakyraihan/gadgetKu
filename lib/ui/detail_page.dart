@@ -83,7 +83,7 @@ class _DetailPageState extends State<DetailPage> {
                     _pageIndex = index;
                   });
                 },
-                itemCount: image.length,
+                itemCount: data.images.length,
                 controller: _pageController,
                 itemBuilder: (context, index) =>
                     Image.network(data.images[index], fit: BoxFit.cover)),
